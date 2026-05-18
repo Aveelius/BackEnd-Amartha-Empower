@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Amartha Empower</title>
 
-    <link rel="stylesheet" href="/build/assets/app-PksLbxpm.css">
-    <script type="module" src="/build/assets/app-Bu_i8e1m.js"></script>
+    <link rel="stylesheet" href="/assets/app.css">
+<script type="module" src="/assets/app.js"></script>
 </head>
 <body>
     <div class="page-shell">
