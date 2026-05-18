@@ -7,8 +7,12 @@
   },
   "routes": [
     {
-      "src": "/build/(.*)",
-      "dest": "/build/$1"
+      "src": "/build/assets/(.*)",
+      "dest": "/public/build/assets/$1"
+    },
+    {
+      "src": "/build/manifest.json",
+      "dest": "/public/build/manifest.json"
     },
     {
       "src": "/(.*)",
