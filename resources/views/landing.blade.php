@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Amartha Empower</title>
-    @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @endif
+
+    <link rel="stylesheet" href="/build/assets/app-PksLbxpm.css">
+    <script type="module" src="/build/assets/app-Bu_i8e1m.js"></script>
 </head>
 <body>
     <div class="page-shell">
