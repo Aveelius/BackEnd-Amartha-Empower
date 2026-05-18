@@ -59,4 +59,13 @@ class CommunityController extends Controller
             'data' => $comment,
         ], 201);
     }
+
+    public function destroy(CommunityPost $post): JsonResponse
+    {
+        $post->delete();
+
+        return response()->json([
+            'message' => 'Posting komunitas berhasil dihapus.',
+        ]);
+    }
 }

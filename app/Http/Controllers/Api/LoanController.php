@@ -19,7 +19,7 @@ class LoanController extends Controller
     public function index(Request $request): JsonResponse
     {
         $loans = $request->user()->role === 'admin'
-            ? Loan::query()->with('user')->latest()->get()
+            ? Loan::query()->with(['user', 'documents', 'installments'])->latest()->get()
             : $request->user()->loans()->with(['documents', 'installments'])->latest()->get();
 
         return response()->json(['data' => $loans]);
@@ -33,6 +33,8 @@ class LoanController extends Controller
             'documents' => ['nullable', 'array'],
             'documents.*.document_type' => ['required_with:documents', 'string', 'max:100'],
             'documents.*.file_name' => ['required_with:documents', 'string', 'max:255'],
+            'document_ktp' => ['nullable', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:5120'],
+            'document_usaha' => ['nullable', 'file', 'mimes:jpg,jpeg,png', 'max:5120'],
         ]);
 
         $loan = DB::transaction(function () use ($request, $validated) {
@@ -45,11 +47,31 @@ class LoanController extends Controller
                 'submitted_at' => now()->toDateString(),
             ]);
 
-            foreach ($validated['documents'] ?? [] as $document) {
+            $documents = $validated['documents'] ?? [];
+            $uploadedDocuments = [
+                'document_ktp' => 'KTP',
+                'document_usaha' => 'Foto Usaha',
+            ];
+
+            foreach ($uploadedDocuments as $fieldName => $documentType) {
+                if (!$request->hasFile($fieldName)) {
+                    continue;
+                }
+
+                $file = $request->file($fieldName);
+                $documents[] = [
+                    'document_type' => $documentType,
+                    'file_name' => $file->getClientOriginalName(),
+                    'file_path' => $file->store('loan-documents', 'public'),
+                ];
+            }
+
+            foreach ($documents as $document) {
                 LoanDocument::create([
                     'loan_id' => $loan->id,
                     'document_type' => $document['document_type'],
                     'file_name' => $document['file_name'],
+                    'file_path' => $document['file_path'] ?? null,
                 ]);
             }
 

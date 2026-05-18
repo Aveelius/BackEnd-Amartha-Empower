@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Loan;
+use App\Models\LoanPayment;
 use App\Models\LearningModule;
 use App\Models\Notification;
 use App\Models\OjkReport;
@@ -43,9 +44,10 @@ class DashboardController extends Controller
         $notifications = $user->notifications()->latest()->take(5)->get();
         $nextInstallment = $loan?->installments->where('status', 'pending')->sortBy('due_date')->first();
 
-        $paidInstallments = $loan?->installments->where('status', 'paid')->count() ?? 0;
-        $totalInstallments = $loan?->installments->count() ?? 0;
-        $completion = $totalInstallments > 0 ? (int) round(($paidInstallments / $totalInstallments) * 100) : 0;
+        $payoffAmount = $loan ? round((float) $loan->amount * (1 + ((float) $loan->interest_rate / 100)), 2) : 0;
+        $verifiedPaymentAmount = $loan ? (float) $loan->payments()->where('status', 'verified')->sum('amount') : 0;
+        $pendingPaymentAmount = $loan ? (float) $loan->payments()->where('status', 'pending')->sum('amount') : 0;
+        $completion = $payoffAmount > 0 ? min(100, (int) round(($verifiedPaymentAmount / $payoffAmount) * 100)) : 0;
 
         return response()->json([
             'user' => $user,
@@ -57,7 +59,12 @@ class DashboardController extends Controller
                 'next_due_date' => $nextInstallment?->due_date?->format('Y-m-d'),
                 'next_installment_amount' => $nextInstallment?->amount,
                 'repayment_progress' => $completion,
+                'payoff_amount' => $payoffAmount,
+                'verified_payment_amount' => $verifiedPaymentAmount,
+                'pending_payment_amount' => $pendingPaymentAmount,
+                'remaining_amount' => max(0, $payoffAmount - $verifiedPaymentAmount),
             ] : null,
+            'payment_history' => $loan ? $loan->payments()->latest()->take(5)->get() : [],
             'learning_progress' => $progress,
             'notifications' => $notifications,
             'menu' => [
@@ -83,9 +90,15 @@ class DashboardController extends Controller
                 'total_users' => User::query()->where('role', 'user')->count(),
             ],
             'recent_applications' => Loan::query()
-                ->with('user')
+                ->with(['user', 'documents'])
                 ->latest()
                 ->take(5)
+                ->get(),
+            'pending_payments' => LoanPayment::query()
+                ->with(['user', 'loan'])
+                ->where('status', 'pending')
+                ->latest()
+                ->take(8)
                 ->get(),
             'latest_ojk_report' => $latestReport,
             'recent_notifications' => Notification::query()->latest()->take(5)->get(),

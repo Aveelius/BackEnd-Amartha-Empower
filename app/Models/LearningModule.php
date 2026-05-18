@@ -16,6 +16,7 @@ class LearningModule extends Model
         'duration_label',
         'format',
         'summary',
+        'content',
         'display_order',
         'is_featured',
     ];

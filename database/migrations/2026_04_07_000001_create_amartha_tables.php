@@ -59,7 +59,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('duration_label');
-            $table->string('format')->default('video-singkat');
+            $table->string('format')->default('teks');
             $table->text('summary');
             $table->unsignedInteger('display_order')->default(0);
             $table->boolean('is_featured')->default(false);

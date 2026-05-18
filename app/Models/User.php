@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -25,8 +26,14 @@ class User extends Authenticatable
         'business_name',
         'domicile',
         'gender',
+        'profile_photo_path',
+        'bio',
         'role',
         'password',
+    ];
+
+    protected $appends = [
+        'profile_photo_url',
     ];
 
     /**
@@ -49,6 +56,13 @@ class User extends Authenticatable
         'password' => 'hashed',
         'approved_at' => 'datetime',
     ];
+
+    public function getProfilePhotoUrlAttribute(): ?string
+    {
+        return $this->profile_photo_path
+            ? Storage::url($this->profile_photo_path)
+            : null;
+    }
 
     public function loans(): HasMany
     {

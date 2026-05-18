@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class AuthController extends Controller
@@ -46,13 +47,14 @@ class AuthController extends Controller
         ]);
 
         $user = User::query()
-            ->where('phone', $validated['login'])
+            ->where('name', $validated['login'])
+            ->orWhere('phone', $validated['login'])
             ->orWhere('email', $validated['login'])
             ->first();
 
         if (! $user || ! Hash::check($validated['password'], $user->password)) {
             return response()->json([
-                'message' => 'Nomor HP/email atau password salah.',
+                'message' => 'Nama atau username salah',
             ], 422);
         }
 
@@ -69,6 +71,39 @@ class AuthController extends Controller
     {
         return response()->json([
             'user' => $request->user(),
+        ]);
+    }
+
+    public function updateProfile(Request $request): JsonResponse
+    {
+        $user = $request->user();
+
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:20', Rule::unique('users', 'phone')->ignore($user->id)],
+            'email' => ['nullable', 'email', 'max:255', Rule::unique('users', 'email')->ignore($user->id)],
+            'business_name' => ['required', 'string', 'max:255'],
+            'domicile' => ['required', 'string', 'max:255'],
+            'gender' => ['required', Rule::in(['female', 'male'])],
+            'bio' => ['nullable', 'string', 'max:1000'],
+            'profile_photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+        ]);
+
+        if ($request->hasFile('profile_photo')) {
+            if ($user->profile_photo_path) {
+                Storage::disk('public')->delete($user->profile_photo_path);
+            }
+
+            $validated['profile_photo_path'] = $request->file('profile_photo')->store('profile-photos', 'public');
+        }
+
+        unset($validated['profile_photo']);
+
+        $user->update($validated);
+
+        return response()->json([
+            'message' => 'Profil berhasil diperbarui.',
+            'user' => $user->fresh(),
         ]);
     }
 
