@@ -14,12 +14,10 @@
             <a class="top-brand" href="/admin">Amartha Empower Admin</a>
             <div class="top-nav-actions">
                 <button class="secondary-button top-nav-button" data-demo-login="admin">Demo Admin</button>
-                <a class="secondary-button link-button top-nav-button" href="/admin">Dashboard Admin</a>
                 <a class="ghost-button link-button top-nav-button" href="/admin/loans">Pengajuan Loan</a>
                 <a class="ghost-button link-button top-nav-button" href="/admin/payments">Verifikasi Pembayaran</a>
                 <a class="ghost-button link-button top-nav-button" href="#admin-community-panel">Kelola Komunitas</a>
                 <a class="ghost-button link-button top-nav-button" href="/">Kembali</a>
-                <a class="ghost-button link-button top-nav-button" href="/user">Ke User</a>
             </div>
         </nav>
 
@@ -29,21 +27,29 @@
                 <h1>Halaman Admin</h1>
                 <p>Panel admin dipisahkan agar verifikasi pengajuan, pencairan dana, monitoring pinjaman, dan laporan OJK lebih fokus.</p>
             </div>
-        </header>
 
-        <main class="content-grid">
             <section class="panel">
                 <div class="panel-header">
                     <div>
-                        <span class="section-tag">Beranda</span>
-                        <h2>Ringkasan Fitur</h2>
+                        <span class="section-tag">Akses Admin</span>
+                        <h2>Status Akun</h2>
+                    </div>
+                    <span class="status-pill" id="auth-status">Belum login</span>
+                </div>
+                <div class="mini-card-list">
+                    <div class="mini-card">
+                        <strong>Masuk ke akun</strong>
+                        <p>Gunakan halaman login untuk membuka dashboard admin, verifikasi pinjaman, pembayaran, komunitas, dan laporan OJK.</p>
+                        <div class="hero-actions">
+                            <button type="button" class="primary-button" id="logout-button">Logout</button>
+                        </div>
                     </div>
                 </div>
-                <div class="cta-stack" id="home-feature-buttons"></div>
-                <div class="mini-card-list" id="home-quick-cards"></div>
             </section>
+        </header>
 
-            <section class="panel">
+        <main class="content-grid admin-content-grid">
+            <section class="panel panel-full">
                 <div class="panel-header">
                     <div>
                         <span class="section-tag">Admin Panel</span>
@@ -66,35 +72,25 @@
                         <h2>Kelola Posting Komunitas</h2>
                     </div>
                 </div>
-                <form id="community-form" class="form-card">
-                    <div class="inline-fields">
-                        <input name="title" placeholder="Judul posting admin" required>
-                        <select name="category" required>
-                            <option value="chat">Chat</option>
-                            <option value="tip">Tips</option>
-                            <option value="event">Event</option>
-                        </select>
-                    </div>
-                    <textarea name="content" placeholder="Tulis pengumuman, tips, atau jadwal kegiatan komunitas." required></textarea>
-                    <div class="inline-fields">
-                        <input name="event_date" type="date">
+                <div class="admin-community-grid">
+                    <form id="community-form" class="form-card">
+                        <div class="inline-fields">
+                            <input name="title" placeholder="Judul posting admin" required>
+                            <select name="category" required>
+                                <option value="chat">Chat</option>
+                                <option value="tip">Tips</option>
+                                <option value="event">Event</option>
+                            </select>
+                        </div>
+                        <textarea name="content" placeholder="Tulis pengumuman, tips, atau jadwal kegiatan komunitas." required></textarea>
                         <input name="event_location" placeholder="Lokasi event (opsional)">
-                    </div>
-                    <button type="submit" class="secondary-button">Posting sebagai Admin</button>
-                </form>
-                <div id="community-list" class="stack-list feature-list"></div>
+                        <button type="submit" class="secondary-button">Posting sebagai Admin</button>
+                    </form>
+                    <div id="community-list" class="stack-list"></div>
+                </div>
             </section>
         </main>
 
-        <section class="panel system-log-panel">
-            <div class="panel-header">
-                <div>
-                    <span class="section-tag">System Log</span>
-                    <h2>Aktivitas Admin</h2>
-                </div>
-            </div>
-            <div id="system-log" class="log-list"></div>
-        </section>
     </div>
 </body>
 </html>

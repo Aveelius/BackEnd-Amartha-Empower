@@ -18,6 +18,7 @@
                 <a class="ghost-button link-button top-nav-button" href="/admin/loans">Pengajuan Loan</a>
                 <a class="secondary-button link-button top-nav-button" href="/admin/payments">Verifikasi Pembayaran</a>
                 <a class="ghost-button link-button top-nav-button" href="/user">Ke User</a>
+                <button type="button" class="ghost-button top-nav-button" id="logout-button">Logout</button>
             </div>
         </nav>
 
@@ -43,15 +44,6 @@
             </section>
         </main>
 
-        <section class="panel system-log-panel">
-            <div class="panel-header">
-                <div>
-                    <span class="section-tag">System Log</span>
-                    <h2>Aktivitas Pembayaran</h2>
-                </div>
-            </div>
-            <div id="system-log" class="log-list"></div>
-        </section>
     </div>
 </body>
 </html>

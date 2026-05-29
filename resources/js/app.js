@@ -51,12 +51,85 @@ const formatCurrency = (value) =>
 
 const formatDate = (value) => value?.slice(0, 10) || '-';
 
+const formatPostDateTime = (value) => {
+    if (!value) {
+        return '-';
+    }
+
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+        return formatDate(value);
+    }
+
+    return new Intl.DateTimeFormat('id-ID', {
+        dateStyle: 'medium',
+        timeStyle: 'short',
+        timeZone: 'Asia/Jakarta',
+    }).format(date);
+};
+
 const escapeHtml = (value = '') => String(value)
     .replaceAll('&', '&amp;')
     .replaceAll('<', '&lt;')
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#039;');
+
+const learningArticleFallbacks = {
+    'Cara Mengatur Pengeluaran Harian': [
+        'Pengeluaran harian usaha sebaiknya dicatat setiap hari, meskipun nominalnya kecil. Catat uang keluar untuk belanja stok, transportasi, kemasan, biaya kirim, pulsa, listrik, dan kebutuhan lain yang mendukung usaha.',
+        'Pisahkan catatan usaha dari kebutuhan rumah tangga. Jika uang usaha dan uang pribadi tercampur, pemilik usaha akan sulit mengetahui apakah usaha benar-benar untung atau hanya terlihat ramai karena banyak transaksi.',
+        'Di akhir hari, bandingkan pemasukan dan pengeluaran. Jika ada biaya yang terlalu sering muncul, cari cara untuk menguranginya, misalnya membeli bahan dalam jumlah yang lebih efisien atau mengatur jadwal pengiriman.',
+    ],
+    'Mengenal Pinjaman Produktif': [
+        'Pinjaman produktif adalah pinjaman yang digunakan untuk kegiatan yang membantu usaha menghasilkan pemasukan. Contohnya menambah stok barang, membeli alat produksi, memperbaiki tempat usaha, atau mendukung promosi yang terukur.',
+        'Sebelum mengambil pinjaman, tulis tujuan penggunaan dana secara jelas. Tujuan yang jelas membantu pemilik usaha menilai apakah pinjaman akan menambah kemampuan usaha atau justru menjadi beban cicilan.',
+        'Hindari memakai dana pinjaman produktif untuk kebutuhan konsumtif. Cicilan tetap harus dibayar setiap bulan, sehingga dana pinjaman sebaiknya dipakai untuk hal yang bisa membantu arus kas usaha.',
+    ],
+    'Tips Investasi Aman': [
+        'Investasi untuk pelaku usaha kecil sebaiknya dimulai dari hal yang mudah dipahami. Jangan menaruh dana pada produk yang menjanjikan keuntungan besar dalam waktu singkat tanpa penjelasan risiko yang jelas.',
+        'Pastikan kebutuhan utama usaha sudah aman sebelum berinvestasi. Dana untuk stok, operasional, cicilan, dan kebutuhan darurat sebaiknya dipisahkan lebih dulu agar investasi tidak mengganggu kegiatan usaha.',
+        'Pilih instrumen yang sesuai tujuan dan kemampuan. Jika belum yakin, mulai dari nominal kecil, pelajari risikonya, dan hindari mengikuti ajakan investasi hanya karena tekanan teman atau tren media sosial.',
+    ],
+    'Menghitung Kebutuhan Pinjaman': [
+        'Nominal pinjaman perlu dihitung dari kebutuhan nyata, bukan dari plafon terbesar yang tersedia. Buat daftar kebutuhan seperti stok, alat, renovasi kecil, biaya pengiriman, atau tambahan tenaga kerja.',
+        'Beri estimasi harga pada setiap kebutuhan dan tambahkan cadangan secukupnya. Cadangan membantu menghadapi kenaikan harga, tetapi jangan menaikkan pinjaman tanpa alasan karena cicilan juga akan bertambah.',
+        'Setelah nominal ditemukan, bandingkan dengan pemasukan dan laba bersih bulanan. Pinjaman yang baik adalah pinjaman yang bisa membantu usaha tumbuh tanpa mengganggu biaya operasional harian.',
+    ],
+    'Tips Mengelola Stok Barang': [
+        'Stok barang perlu disesuaikan dengan pola penjualan. Barang yang cepat laku bisa disiapkan lebih banyak, sedangkan barang yang lambat bergerak sebaiknya dibeli dalam jumlah terbatas agar modal tidak tertahan.',
+        'Lakukan pencatatan stok masuk dan stok keluar. Catatan sederhana membantu pemilik usaha mengetahui barang mana yang paling menguntungkan, kapan harus belanja lagi, dan barang mana yang perlu dikurangi.',
+        'Jika memakai dana pinjaman untuk stok, prioritaskan barang yang perputarannya cepat. Perputaran stok yang sehat membantu usaha mendapatkan pemasukan untuk membayar cicilan tepat waktu.',
+    ],
+    'Memahami Bunga, Tenor, dan Cicilan': [
+        'Bunga adalah biaya atas penggunaan dana pinjaman. Tenor adalah jangka waktu pembayaran, misalnya 6, 12, atau 24 bulan. Cicilan adalah jumlah yang perlu dibayar secara berkala sesuai perjanjian.',
+        'Tenor yang lebih panjang dapat membuat cicilan bulanan lebih ringan, tetapi total biaya pinjaman bisa menjadi lebih besar. Karena itu, pilih tenor yang sesuai kemampuan bayar, bukan hanya yang terasa paling ringan.',
+        'Catat tanggal jatuh tempo dan siapkan dana cicilan beberapa hari sebelumnya. Kebiasaan ini membantu menghindari keterlambatan dan menjaga reputasi keuangan usaha.',
+    ],
+    'Menilai Kemampuan Bayar': [
+        'Kemampuan bayar sebaiknya dihitung dari laba bersih, bukan omzet. Laba bersih adalah uang yang tersisa setelah dikurangi modal barang, sewa, listrik, transportasi, dan biaya operasional lain.',
+        'Cicilan idealnya diambil dari sebagian laba bersih. Jangan menggunakan uang belanja keluarga atau modal stok bulan berikutnya untuk membayar cicilan, karena hal itu bisa mengganggu keuangan rumah tangga dan usaha.',
+        'Jika pendapatan usaha sering naik turun, gunakan angka laba terendah sebagai acuan. Dengan begitu, cicilan tetap lebih aman meskipun penjualan sedang tidak ramai.',
+    ],
+    'Mengelola Dana Setelah Cair': [
+        'Setelah dana pinjaman cair, pisahkan dana tersebut dari uang pribadi. Gunakan rekening, amplop, atau catatan khusus agar penggunaan dana mudah dipantau.',
+        'Belanjakan dana sesuai rencana awal dan simpan bukti transaksi. Bukti ini membantu mengevaluasi apakah dana benar-benar dipakai untuk kebutuhan yang mendukung usaha.',
+        'Pantau hasil penggunaan dana dalam beberapa minggu. Jika penjualan meningkat, sisihkan cicilan lebih awal sebelum memakai sisa keuntungan untuk kebutuhan lain.',
+    ],
+};
+
+const renderArticleParagraphs = (item) => {
+    const paragraphs = item.content
+        ? item.content.split('\n').filter(Boolean)
+        : learningArticleFallbacks[item.title] || [];
+
+    if (!paragraphs.length) {
+        return '<p>Materi sedang disiapkan.</p>';
+    }
+
+    return paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('');
+};
 
 const formatPaymentMethod = (method) => method === 'ewallet' ? 'E-wallet' : 'Bank Transfer';
 
@@ -89,6 +162,26 @@ const setProfileMessage = (message, isError = false) => {
     el.profileResult.style.borderLeft = isError ? '6px solid #ff726d' : '6px solid #35b8aa';
 };
 
+const showToast = (message, isError = false) => {
+    let toast = document.getElementById('app-toast');
+
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'app-toast';
+        toast.setAttribute('role', 'status');
+        toast.setAttribute('aria-live', 'polite');
+        document.body.appendChild(toast);
+    }
+
+    toast.textContent = message;
+    toast.className = `app-toast ${isError ? 'app-toast-error' : 'app-toast-success'} app-toast-visible`;
+
+    window.clearTimeout(showToast.hideTimer);
+    showToast.hideTimer = window.setTimeout(() => {
+        toast.classList.remove('app-toast-visible');
+    }, 3200);
+};
+
 const getAuthKey = (role = state.user?.role || expectedRole || 'user') => AUTH_KEYS[role] || AUTH_KEYS.user;
 
 const persistAuth = () => {
@@ -104,6 +197,35 @@ const persistAuth = () => {
 
 const clearPersistedAuth = (role = state.user?.role || expectedRole || 'user') => {
     localStorage.removeItem(getAuthKey(role));
+};
+
+const clearAllPersistedAuth = () => {
+    Object.values(AUTH_KEYS).forEach((key) => localStorage.removeItem(key));
+    localStorage.removeItem(LEGACY_STORAGE_KEY);
+};
+
+const logoutAndRedirectToLogin = async () => {
+    const roleToClear = state.user?.role || expectedRole;
+    const tokenToRevoke = state.token;
+
+    state.token = null;
+    state.user = null;
+    clearPersistedAuth(roleToClear);
+    clearAllPersistedAuth();
+    syncAuthUi();
+
+    if (tokenToRevoke) {
+        try {
+            await api('/api/auth/logout', {
+                method: 'POST',
+                headers: { Authorization: `Bearer ${tokenToRevoke}` },
+            });
+        } catch (error) {
+            log(error.message);
+        }
+    }
+
+    window.location.replace('/');
 };
 
 const redirectAfterAuth = (form) => {
@@ -513,40 +635,31 @@ const renderLearning = async () => {
     }
 
     if (!state.token) {
-        el.learningList.innerHTML = '<div class="tile empty-state">Login untuk membuka progres belajar.</div>';
+        el.learningList.innerHTML = '<article class="learning-article empty-state">Login untuk membaca artikel ruang belajar.</article>';
         return;
     }
 
     const data = await api('/api/learning-modules');
     el.learningList.innerHTML = data.data.map((item) => {
-        const progress = item.progress?.[0];
-        const completion = progress?.completion_percent || 0;
-        const material = item.content
-            ? item.content.split('\n').filter(Boolean).map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join('')
-            : '<p>Materi sedang disiapkan.</p>';
+        const material = renderArticleParagraphs(item);
 
         return `
-            <div class="tile">
-                <strong>${escapeHtml(item.title)}</strong>
-                <p>${escapeHtml(item.summary)}</p>
-                <div class="meta-row">
+            <article class="learning-article">
+                <div class="article-meta">
+                    <span>Artikel</span>
                     <span>${escapeHtml(item.duration_label)}</span>
-                    <span>${completion}% selesai</span>
                 </div>
-                <details class="learning-material">
-                    <summary>Baca Materi</summary>
-                    <div>${material}</div>
-                </details>
-                <div class="progress-bar"><span style="width:${completion}%"></span></div>
-                <button class="ghost-button" data-complete-module="${item.id}">Tandai Selesai</button>
-            </div>
+                <h3>${escapeHtml(item.title)}</h3>
+                <p class="article-summary">${escapeHtml(item.summary)}</p>
+                <div class="article-body">${material}</div>
+            </article>
         `;
     }).join('');
 
-    log('Ruang belajar dimuat.');
+    log('Artikel ruang belajar dimuat.');
 };
 
-const renderCommunity = async () => {
+const renderCommunity = async ({ highlightPostId = null } = {}) => {
     if (!el.communityList) {
         return;
     }
@@ -558,7 +671,7 @@ const renderCommunity = async () => {
 
     const data = await api('/api/community-posts');
     el.communityList.innerHTML = data.data.map((item) => `
-        <div class="stack-item">
+        <div class="stack-item community-post${String(item.id) === String(highlightPostId) ? ' community-post-new' : ''}" data-community-post-id="${item.id}">
             <div class="meta-row">
                 <strong>${escapeHtml(item.title)}</strong>
                 <span>${escapeHtml(item.category)}</span>
@@ -566,13 +679,23 @@ const renderCommunity = async () => {
             <p>${escapeHtml(item.content)}</p>
             <div class="meta-row">
                 <span>Oleh ${escapeHtml(item.user.name)} (${escapeHtml(item.user.role)})</span>
-                <span>${item.event_date || item.created_at.slice(0, 10)}</span>
+                <span>Diposting: ${formatPostDateTime(item.created_at)}</span>
             </div>
             ${item.event_location ? `<p>Lokasi: ${escapeHtml(item.event_location)}</p>` : ''}
             ${item.comments.length ? `<div class="stack-list">${item.comments.map((comment) => `<div class="mini-card"><strong>${escapeHtml(comment.user.name)}</strong><p>${escapeHtml(comment.content)}</p></div>`).join('')}</div>` : ''}
             ${state.user?.role === 'admin' ? `<button class="ghost-button" data-delete-community-post="${item.id}">Hapus Posting</button>` : ''}
         </div>
     `).join('');
+
+    if (highlightPostId) {
+        const newPost = el.communityList.querySelector(`[data-community-post-id="${highlightPostId}"]`);
+        if (newPost) {
+            newPost.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            window.setTimeout(() => {
+                newPost.classList.remove('community-post-new');
+            }, 3500);
+        }
+    }
 
     log('Komunitas usaha perempuan dimuat.');
 };
@@ -728,22 +851,9 @@ document.getElementById('login-form')?.addEventListener('submit', async (event) 
 });
 
 document.getElementById('logout-button')?.addEventListener('click', async () => {
-    const roleToClear = state.user?.role || expectedRole;
-
-    if (state.token) {
-        try {
-            await api('/api/auth/logout', { method: 'POST' });
-        } catch (error) {
-            log(error.message);
-        }
-    }
-
-    state.token = null;
-    state.user = null;
-    clearPersistedAuth(roleToClear);
     setLoanMessage('', false);
     log('Sesi login dihapus.');
-    await refreshAll();
+    await logoutAndRedirectToLogin();
 });
 
 document.querySelectorAll('[data-demo-login]').forEach((button) => {
@@ -861,19 +971,33 @@ document.querySelectorAll('input[name="payment_method"]').forEach((input) => {
 
 document.getElementById('community-form')?.addEventListener('submit', async (event) => {
     event.preventDefault();
+    const form = event.currentTarget;
+
     if (!state.token) {
+        showToast('Postingan gagal terkirim. Silakan login terlebih dahulu.', true);
         log('Login terlebih dahulu untuk posting ke komunitas.');
         return;
     }
 
-    const payload = Object.fromEntries(new FormData(event.currentTarget).entries());
+    const payload = Object.fromEntries(new FormData(form).entries());
+    let data;
 
     try {
-        await api('/api/community-posts', { method: 'POST', body: JSON.stringify(payload) });
-        event.currentTarget.reset();
-        log('Posting komunitas berhasil dibuat.');
-        await renderCommunity();
+        data = await api('/api/community-posts', { method: 'POST', body: JSON.stringify(payload) });
     } catch (error) {
+        showToast(`Postingan gagal terkirim. ${error.message}`, true);
+        log(error.message);
+        return;
+    }
+
+    form.reset();
+    log('Posting komunitas berhasil dibuat.');
+    showToast('Postingan berhasil terkirim ke komunitas.');
+
+    try {
+        await renderCommunity({ highlightPostId: data.data.id });
+    } catch (error) {
+        showToast('Postingan berhasil terkirim, tetapi daftar komunitas belum berhasil diperbarui otomatis.', true);
         log(error.message);
     }
 });

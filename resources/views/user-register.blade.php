@@ -10,24 +10,14 @@
 </head>
 <body>
     <div class="page-shell">
-        <nav class="top-user-nav" aria-label="Navigasi utama user">
-            <a class="top-brand" href="/user">Amartha Empower</a>
-            <div class="top-nav-actions">
-                <a class="ghost-button link-button top-nav-button" href="/user">Dashboard</a>
-                <a class="ghost-button link-button top-nav-button" href="/user/login">Login</a>
-                <a class="secondary-button link-button top-nav-button" href="/user/register">Register</a>
-                <a class="ghost-button link-button top-nav-button" href="/user/quick-loan">Quick Loan</a>
-                <a class="ghost-button link-button top-nav-button" href="/user/payment">Pembayaran</a>
-                <a class="ghost-button link-button top-nav-button" href="/user/ruang-belajar">Ruang Belajar</a>
-                <a class="ghost-button link-button top-nav-button" href="/user/komunitas">Komunitas</a>
-            </div>
-        </nav>
-
         <header class="feature-page-header">
             <div>
                 <span class="eyebrow">Register User</span>
                 <h1>Buat Akun Baru</h1>
                 <p>Daftarkan profil usaha agar bisa mengakses Quick Loan, Ruang Belajar, dan Komunitas.</p>
+            </div>
+            <div class="feature-page-nav">
+                <a class="ghost-button link-button" href="/user">Kembali ke Dashboard</a>
             </div>
         </header>
 
@@ -55,20 +45,11 @@
                 </form>
                 <div class="auth-switch-card">
                     <p>Sudah punya akun?</p>
-                    <a class="secondary-button link-button" href="/user/login">Masuk ke Login</a>
+                    <a class="secondary-button link-button" href="/">Kembali ke Halaman Awal</a>
                 </div>
             </section>
         </main>
 
-        <section class="panel system-log-panel">
-            <div class="panel-header">
-                <div>
-                    <span class="section-tag">System Log</span>
-                    <h2>Aktivitas Register</h2>
-                </div>
-            </div>
-            <div id="system-log" class="log-list"></div>
-        </section>
     </div>
 </body>
 </html>

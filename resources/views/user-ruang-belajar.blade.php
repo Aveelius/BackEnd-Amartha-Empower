@@ -14,8 +14,6 @@
             <a class="top-brand" href="/user">Amartha Empower</a>
             <div class="top-nav-actions">
                 <button class="primary-button top-nav-button" data-demo-login="user">Demo User</button>
-                <a class="ghost-button link-button top-nav-button" href="/user">Dashboard</a>
-                <a class="ghost-button link-button top-nav-button" href="/user/login">Login</a>
                 <a class="ghost-button link-button top-nav-button" href="/user/quick-loan">Quick Loan</a>
                 <a class="ghost-button link-button top-nav-button" href="/user/payment">Pembayaran</a>
                 <a class="secondary-button link-button top-nav-button" href="/user/ruang-belajar">Ruang Belajar</a>
@@ -27,7 +25,10 @@
             <div>
                 <span class="eyebrow">Ruang Belajar</span>
                 <h1>Materi Peminjaman Uang</h1>
-                <p>Ikuti modul belajar untuk memahami tujuan pinjaman, bunga, tenor, cicilan, dan cara memakai dana secara bertanggung jawab.</p>
+                <p>Baca artikel praktis untuk memahami tujuan pinjaman, bunga, tenor, cicilan, dan cara memakai dana secara bertanggung jawab.</p>
+            </div>
+            <div class="feature-page-nav">
+                <a class="ghost-button link-button" href="/user">Kembali ke Dashboard</a>
             </div>
         </header>
 
@@ -36,23 +37,14 @@
                 <div class="panel-header">
                     <div>
                         <span class="section-tag">Materi Belajar</span>
-                        <h2>Daftar Modul</h2>
+                        <h2>Artikel Pilihan</h2>
                     </div>
                     <span class="status-pill" id="auth-status">Belum login</span>
                 </div>
-                <div id="learning-list" class="tile-grid"></div>
+                <div id="learning-list" class="article-list"></div>
             </section>
         </main>
 
-        <section class="panel system-log-panel">
-            <div class="panel-header">
-                <div>
-                    <span class="section-tag">System Log</span>
-                    <h2>Aktivitas Belajar</h2>
-                </div>
-            </div>
-            <div id="system-log" class="log-list"></div>
-        </section>
     </div>
 </body>
 </html>

@@ -14,8 +14,6 @@
             <a class="top-brand" href="/user">Amartha Empower</a>
             <div class="top-nav-actions">
                 <button class="primary-button top-nav-button" data-demo-login="user">Demo User</button>
-                <a class="ghost-button link-button top-nav-button" href="/user">Dashboard</a>
-                <a class="ghost-button link-button top-nav-button" href="/user/login">Login</a>
                 <a class="ghost-button link-button top-nav-button" href="/user/quick-loan">Quick Loan</a>
                 <a class="ghost-button link-button top-nav-button" href="/user/payment">Pembayaran</a>
                 <a class="ghost-button link-button top-nav-button" href="/user/ruang-belajar">Ruang Belajar</a>
@@ -28,6 +26,9 @@
                 <span class="eyebrow">Komunitas</span>
                 <h1>Komunitas Usaha Perempuan</h1>
                 <p>Bagikan pengalaman, tips usaha, dan jadwal pelatihan bersama pengguna lain.</p>
+            </div>
+            <div class="feature-page-nav">
+                <a class="ghost-button link-button" href="/user">Kembali ke Dashboard</a>
             </div>
         </header>
 
@@ -50,25 +51,13 @@
                         </select>
                     </div>
                     <textarea name="content" placeholder="Bagikan pengalaman, tips usaha, atau jadwal pelatihan." required></textarea>
-                    <div class="inline-fields">
-                        <input name="event_date" type="date">
-                        <input name="event_location" placeholder="Lokasi event (opsional)">
-                    </div>
+                    <input name="event_location" placeholder="Lokasi event (opsional)">
                     <button type="submit" class="secondary-button">Kirim ke Komunitas</button>
                 </form>
                 <div id="community-list" class="stack-list feature-list"></div>
             </section>
         </main>
 
-        <section class="panel system-log-panel">
-            <div class="panel-header">
-                <div>
-                    <span class="section-tag">System Log</span>
-                    <h2>Aktivitas Komunitas</h2>
-                </div>
-            </div>
-            <div id="system-log" class="log-list"></div>
-        </section>
     </div>
 </body>
 </html>

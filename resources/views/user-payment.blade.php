@@ -14,8 +14,6 @@
             <a class="top-brand" href="/user">Amartha Empower</a>
             <div class="top-nav-actions">
                 <button class="primary-button top-nav-button" data-demo-login="user">Demo User</button>
-                <a class="ghost-button link-button top-nav-button" href="/user">Dashboard</a>
-                <a class="ghost-button link-button top-nav-button" href="/user/login">Login</a>
                 <a class="ghost-button link-button top-nav-button" href="/user/quick-loan">Quick Loan</a>
                 <a class="secondary-button link-button top-nav-button" href="/user/payment">Pembayaran</a>
                 <a class="ghost-button link-button top-nav-button" href="/user/ruang-belajar">Ruang Belajar</a>
@@ -29,7 +27,10 @@
                 <h1>Bayar Cicilan</h1>
                 <p>Pilih metode pembayaran, masukkan nominal, lalu unggah bukti pembayaran untuk diverifikasi admin.</p>
             </div>
-            <span class="status-pill" id="auth-status">Belum login</span>
+            <div class="feature-page-nav">
+                <span class="status-pill" id="auth-status">Belum login</span>
+                <a class="ghost-button link-button" href="/user">Kembali ke Dashboard</a>
+            </div>
         </header>
 
         <main class="content-grid">
@@ -78,15 +79,6 @@
             </section>
         </main>
 
-        <section class="panel system-log-panel">
-            <div class="panel-header">
-                <div>
-                    <span class="section-tag">System Log</span>
-                    <h2>Aktivitas Pembayaran</h2>
-                </div>
-            </div>
-            <div id="system-log" class="log-list"></div>
-        </section>
     </div>
 </body>
 </html>

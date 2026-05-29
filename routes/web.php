@@ -25,10 +25,6 @@ Route::get('/user/profile', function () {
     return view('user-profile');
 });
 
-Route::get('/user/login', function () {
-    return view('user-login');
-});
-
 Route::get('/user/register', function () {
     return view('user-register');
 });
